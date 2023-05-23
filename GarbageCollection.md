@@ -18,3 +18,27 @@
 - compact를 하는 GC라면, 단편화 된 메모리를 정리한다.
   - > 스택(stack)이란? <br> 한 쪽 끝에서만 자료를 넣고 뺼 수 있는 LIFO형식의 자료 구조
   - > 힙(Heap)이란? <br> 완전 이진 트리의 일종으로 우선순위 큐를 위하여 만들어진 자료구조이다. <br> 여러 개의 값들 중에서 최댓값이나 최솟값을 빠르게 찾아내도록 만들어진 자료구조이다.
+
+#동작예제
+`function createObjects() {
+let obj1 = { name: 'Object 1' };
+let obj2 = { name: 'Object 2' };
+
+obj1.ref = obj2;
+obj2.ref = obj1;
+
+return obj1;
+}
+
+function doSomething() {
+let obj = createObjects();
+
+// obj1과 obj2는 서로를 참조하므로 여전히 도달 가능한 상태입니다.
+// 하지만 obj1을 반환했으므로 obj2는 접근할 수 없는 상태가 됩니다.
+// 그러나 obj2는 여전히 obj1을 참조하고 있으므로 메모리 누수가 발생합니다.
+}
+
+doSomething();`
+
+- 가비지 컬렉션은 자바스크립트 엔진에서 자동으로 이루어지므로 명시적인 조작이 필요하지 않다.
+- 실제로 가비지 컬렉션은 개발자가 직접 제어할 수 없고, 자바스크립트 엔진에 의해 자동으로 처리가 된다!
